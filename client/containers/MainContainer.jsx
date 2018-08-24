@@ -11,6 +11,7 @@ class MainContainer extends Component {
     return (
       <div>
         H3llo from react MainContainer
+        <HeaderComponent />
       </div>
     );
   }
