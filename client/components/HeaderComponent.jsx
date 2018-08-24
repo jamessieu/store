@@ -3,11 +3,7 @@ import React from 'react';
 
 
 
-const HeaderComponent = () => {
-  
-  
-  
-  
+const HeaderComponent = () => { 
 return (
     <div class="header"> 
         <h1>LOGO HERE</h1> 
