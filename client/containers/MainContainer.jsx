@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import HeaderComponent from './components/HeaderComponent'
-
-
-
+import HeaderComponent from '../components/HeaderComponent.jsx';
 
 class MainContainer extends Component {
   constructor(props) {
@@ -13,7 +10,6 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        {HeaderComponent}
         H3llo from react MainContainer
       </div>
     );
