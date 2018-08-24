@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import HeaderComponent from './components/HeaderComponent'
 
 
 
@@ -12,6 +13,7 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
+        {HeaderComponent}
         H3llo from react MainContainer
       </div>
     );
