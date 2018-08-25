@@ -18,6 +18,9 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.get('/main',
     eventController.getAllProducts,
 )
+app.get('/main',
+    eventController.getAllProducts,
+)
 
 app.get('/mens',
     eventController.filterByMen,
@@ -26,7 +29,6 @@ app.get('/mens',
 app.get('/womens',
     eventController.filterByWomen,
 )
-
 
 app.get('/cart',
     eventController.getCart,
@@ -41,10 +43,7 @@ server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so
 const io = socket(server);
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
-
     socket.on('SEND_MESSAGE', function(data){
-      console.log(data);
         io.emit('RECEIVE_MESSAGE', data);
     })
 });
