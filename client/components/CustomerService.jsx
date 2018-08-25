@@ -33,18 +33,20 @@ class Chat extends Component {
   }
 
   componentDidMount() {
+    $(".chat-body").toggle();
+  }
 
+  toggleChat(e) {
+    e.preventDefault();
     $(".chat-head img").on("click", function() {
       var src = $(".chat-head img").attr("src");
-
-      $(".chat-body").slideToggle("fast");
+      $(".chat-body").toggle();
       if (src == "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png") {
         $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png");
       } else {
         $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png");
       }
     });
-
   }
 
   render(){
@@ -52,7 +54,7 @@ class Chat extends Component {
       <div className="chat-box">
         <div className="chat-head">
           <h2>Customer Service Rep</h2>
-          <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16"/>
+          <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16" onClick={this.toggleChat}/>
         </div>
         <div className="chat-body">
           <div className="msg-insert">
