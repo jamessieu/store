@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-var server = require('http').Server(app);
-const io = module.exports.io  = require('socket.io')(server);
 const db = require('./db/postgresql.js');
 const eventController = require('./db/event-controller.js');
+const http = require('http');
+const socket = require('socket.io');
 
 
 const PORT = process.env.PORT || 3000;
@@ -23,10 +23,17 @@ app.get('/main',
 //     eventController.getWomens,
 // )
 
-io.on('connection', function (socket) {
-  socket.on('message', function () { });
-  socket.on('disconnect', function () { });
+
+
+server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
+
+const io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(data){
+      console.log(data);
+        io.emit('RECEIVE_MESSAGE', data);
+    })
 });
-
-
-app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
