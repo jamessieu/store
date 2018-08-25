@@ -1,9 +1,11 @@
 //Dumb Component, will display a logo, cart and user profile link w/ image. 
 import React from 'react'; 
+// import styles.css from '.client/styles.css';
 
 
-
-const HeaderComponent = () => { 
+const HeaderComponent = () => {
+  
+  
 return (
     <div className="header"> 
         <h1>LOGO HERE</h1> 
