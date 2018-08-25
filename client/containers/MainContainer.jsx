@@ -12,10 +12,10 @@ class MainContainer extends Component {
   }
 render() {
   return (
-    <div> 
-      <Chat/>
+    <div>       
       <HeaderComponent />
       <ProductDisplay /> 
+      <Chat />
     </div>
     );
   }
