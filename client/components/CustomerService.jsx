@@ -1,9 +1,35 @@
 import React, { Component } from 'react';
 import $ from 'jquery'; 
+import io from "socket.io-client";
 
 class Chat extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      username: 'Colin',
+      message: '',
+      messages: []
+    };
+
+    this.socket = io('localhost:3000');
+
+    this.sendMessage = ev => {
+      ev.preventDefault();
+      this.socket.emit('SEND_MESSAGE', {
+        author: this.state.username,
+        message: this.state.message
+      });
+      this.setState({message: ''});
+    }
+
+    this.socket.on('RECEIVE_MESSAGE', function(data){
+        addMessage(data);
+    });
+
+    const addMessage = data => {
+        this.setState({messages: [...this.state.messages, data]});
+    };
   }
 
   componentDidMount() {
@@ -19,16 +45,6 @@ class Chat extends Component {
       }
     });
 
-    $(".chat-text textarea").keypress(function(event) {
-      var $this = $(this);
-
-      if (event.keyCode == 13) {
-        var msg = $this.val();
-        $this.val("");
-        $(".msg-insert").prepend("<div class='msg-send'>" + msg + "</div>");
-      }
-    });
-
   }
 
   render(){
@@ -40,15 +56,19 @@ class Chat extends Component {
         </div>
         <div className="chat-body">
           <div className="msg-insert">
-            <div className="msg-send"> 
-            Send message
-            </div>
-            <div className="msg-receive">
-            Received message
+            <div className="messages">
+              {this.state.messages.map(message => {
+                return (
+                  <div className="msg-receive">{message.author}: {message.message}</div>
+                )
+              })}
             </div>
           </div>
           <div className="chat-text">
-            <textarea placeholder="Send"></textarea>
+           <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
+          </div>
+          <div className="send">
+            <button onClick={this.sendMessage}>SEND</button>
           </div>
         </div>
       </div>

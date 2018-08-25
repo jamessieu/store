@@ -64,12 +64,12 @@ body{
     margin-bottom: 45px;
 }
 .chat-text{
-    position: fixed;
-    bottom: 0px;
+    position: absolute;
+    bottom: 50px;
     height: 45px;
     width: inherit;
 }
-.chat-text textarea{
+.chat-text input{
     width: inherit;
     height: inherit; 
     box-sizing: border-box;
@@ -77,9 +77,35 @@ body{
     padding: 10px;
     resize: none;
 }
-.chat-text textarea:active, .chat-text textarea:focus, .chat-text textarea:hover{
+.chat-text input:active, .chat-text input:focus, .chat-text input:hover{
     border-color: royalblue;
 }
+
+.send {
+    position: fixed;
+    bottom: 0px;
+    width: inherit;
+    text-align: center;
+    padding: : 5px auto;
+}
+ .send button {
+    background-color: red;
+    position: /*relative*/;
+    bottom: 0px;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    height: 40px;
+    /*margin: 10px auto;*/
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #bdc3c7;
+    box-sizing: border-box;
+    margin: 5px 0px;
+
+
+ }
 .msg-send{
     background: #2ecc71;
 }
