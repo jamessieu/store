@@ -21,12 +21,4 @@ render() {
   }
 }
 
-
-// axios.get(API_URI) 
-//   .then((response) => {
-//     const items = response;
-//   });
-
-
-
 export default MainContainer;
