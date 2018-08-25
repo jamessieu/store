@@ -15,14 +15,13 @@ app.get('/main',
     eventController.getAllProducts,
 )
 
-// app.get('/mens',
-//     eventController.getMens,
-// )
+app.get('/mens',
+    eventController.filterByMen,
+)
 
-// app.get('/womens',
-//     eventController.getWomens,
-// )
-
+app.get('/womens',
+    eventController.filterByWomen,
+)
 
 
 server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
