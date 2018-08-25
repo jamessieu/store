@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import HeaderComponent from '../components/HeaderComponent.jsx';
+import Chat from '../components/CustomerService.jsx';
 import HeaderComponent from '../components/HeaderComponent.jsx'
 import ProductDisplay from '../components/ProductDisplayComponent.jsx' 
 import LeftSidebarMenuComponent from '../components/LeftSidebarMenuComponent.jsx'
@@ -16,7 +18,14 @@ class MainContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+  render() {
+    return (
+      <div> 
+        H3llo from react MainContainer
+        <HeaderComponent />
+        <Chat/>
+      </div>
+    );
       images: []
 
     }
