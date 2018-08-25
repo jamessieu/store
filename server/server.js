@@ -18,21 +18,18 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.get('/main',
     eventController.getAllProducts,
 )
-app.get('/main',
-    eventController.getAllProducts,
-)
 
-app.get('/mens',
-    eventController.filterByMen,
-)
+// app.get('/mens',
+//     eventController.filterByMen,
+// )
 
-app.get('/womens',
-    eventController.filterByWomen,
-)
+// app.get('/womens',
+//     eventController.filterByWomen,
+// )
 
-app.get('/cart',
-    eventController.getCart,
-)
+// app.get('/cart',
+//     eventController.getCart,
+// )
 
 
 
