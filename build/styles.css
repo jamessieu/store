@@ -22,3 +22,10 @@
     margin-top: 250px;
 }
 
+
+.singleitem  {
+    border: solid; 
+    border-color: purple; 
+    height: 100px;
+    width: 100px;
+}

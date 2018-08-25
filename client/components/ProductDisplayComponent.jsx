@@ -1,5 +1,6 @@
 //Will need state to render the products on the the main page. 
 import React from 'react'
+import SingleProduct from '../components/SingleProduct.jsx'
 
 
 
@@ -11,8 +12,8 @@ const ProductDisplay = () => {
     <div className="productdisplay"> 
         {/* //Should display ProductItems.  */}
         <p>Super Cool Products</p>
-
-    </div>
+        <SingleProduct />
+     </div>
 )}
 
 
