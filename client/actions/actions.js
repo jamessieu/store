@@ -35,3 +35,13 @@ export const fetchProductsFailure = (error) => {
   type: types.FETCH_PRODUCTS_ERROR;
   payload: { error }
 }
+
+export const addMessages = message => {
+  type: types.ADD_MESSAGE;
+  payload: message;
+}
+
+export const updateUserName = user => {
+  type: types.UPDATE_USERNAME;
+  payload: user;
+}
