@@ -35,3 +35,10 @@ export const fetchProductsFailure = (error) => {
   type: types.FETCH_PRODUCTS_ERROR;
   payload: { error }
 }
+
+export const loadProducts = (products) => {
+  return {
+    type: types.LOAD_PRODUCTS,
+    payload: products,
+  }
+}
