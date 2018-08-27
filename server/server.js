@@ -35,18 +35,11 @@ app.get('/main',
 
 const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
 
-// socket setup 
 const io = socket(server);
 
-// listen for when the client connects to the server
-io.on('connection', (socket) => { // each client will have their own socket b/w client and server
-  // now the socket must be connected on the front end to see the below message
-  console.log('Connected to socket: ', socket.id);  // id will be different for every computer or refresh
-
-    // listening for the emmited event from the client side called "SEND_MESSAGE"
-    socket.on('SEND_MESSAGE', data => { // we are receiving the data the client sent
-      // we want to now send the message out to all other members of the chat
-      io.sockets.emit('RECEIVE_MESSAGE', data); // io.sockets represents all other connected sockets
-      // io.emit('RECEIVE_MESSAGE', data);
-    })
+io.on('connection', (socket) => {
+  console.log("socket: ", socket.id);
+  socket.on('SEND_MESSAGE', function(data){
+    io.sockets.emit('RECEIVE_MESSAGE', data);
+  })
 });
