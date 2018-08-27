@@ -22,26 +22,26 @@ export function fetchProducts() {
   
 }
 
-export const fetchProductsBegin = () => {
-  type: types.FETCH_PRODUCTS_BEGIN
-}
+// export const fetchProductsBegin = () => {
+//   type: types.FETCH_PRODUCTS_BEGIN
+// }
 
-export const fetchProductsSuccess = (products) => {
-  type: types.FETCH_PRODUCTS_SUCCESS;
-  payload: { products }
-}
+// export const fetchProductsSuccess = (products) => {
+//   type: types.FETCH_PRODUCTS_SUCCESS;
+//   payload: { products }
+// }
 
-export const fetchProductsFailure = (error) => {
-  type: types.FETCH_PRODUCTS_ERROR;
-  payload: { error }
-}
+// export const fetchProductsFailure = (error) => {
+//   type: types.FETCH_PRODUCTS_ERROR;
+//   payload: { error }
+// }
 
-export const addMessages = message => {
-  type: types.ADD_MESSAGE;
-  payload: message;
-}
+export const addMessage = message => ({
+  type: types.ADD_MESSAGE,
+  payload: message
+})
 
-export const updateUserName = user => {
-  type: types.UPDATE_USERNAME;
-  payload: user;
-}
+export const updateUserName = user => ({
+  type: types.UPDATE_USERNAME,
+  payload: user
+})
