@@ -41,7 +41,21 @@ export const addMessage = message => ({
   payload: message
 })
 
+<<<<<<< HEAD
 export const updateUserName = user => ({
   type: types.UPDATE_USERNAME,
   payload: user
 })
+=======
+export const fetchProductsFailure = (error) => {
+  type: types.FETCH_PRODUCTS_ERROR;
+  payload: { error }
+}
+
+export const loadProducts = (products) => {
+  return {
+    type: types.LOAD_PRODUCTS,
+    payload: products,
+  }
+}
+>>>>>>> master
