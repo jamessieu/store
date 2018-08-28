@@ -36,6 +36,11 @@ class Chat extends Component {
       })
     });
 
+    this.props.socket.on('RECEIVE_NAME', name => {
+      console.log(name);
+      // that.props.updateUsername(name);
+    })
+
     this.sendMessage = this.sendMessage.bind(this);
   }
 
