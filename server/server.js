@@ -38,7 +38,7 @@ function createUserAndCart(username) {
 
 function loggedIn(req, res, next) {
   if(req.user && sessions[req.user.displayName]) {
-    res.locals = req.user.name.givenName;
+    res.locals = req.user.profile.name.givenName;
     next();
   } else {
     res.redirect('/login');
@@ -51,7 +51,7 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:3000/googleOAuth'
 }, function(accessToken, refreshToken, profile, cb) {
     sessions[profile.displayName] = profile;
-    return cb(null, {displayName: profile.displayName});
+    return cb(null, {displayName: profile.displayName, profile: profile});
 }));
 
 passport.serializeUser(function(user, done) {

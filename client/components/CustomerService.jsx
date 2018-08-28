@@ -12,6 +12,7 @@ const mapStateToProps = store => ({
 
 const dispatchStateToProps = dispatch => ({
   addMessage: (message) => dispatch(actions.addMessage(message)),
+  updateUserName: (name) => dispatch(actions.updateUserName(name))
 });
 
 class Chat extends Component {
@@ -36,9 +37,10 @@ class Chat extends Component {
       })
     });
 
-    this.props.socket.on('RECEIVE_NAME', name => {
-      console.log(name);
-      // that.props.updateUsername(name);
+    fetch('/getname').then(function(response) {
+      return response.text().then(function(text) {
+        that.props.updateUserName(text);
+      });
     })
 
     this.sendMessage = this.sendMessage.bind(this);
