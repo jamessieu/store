@@ -23,7 +23,7 @@ class ProductDisplay extends React.Component {
     const {classes} = this.props;
     for(let i = 0; i < this.props.products.length; i++) {
       products.push(
-        (<Card style = {{margin: '25px'}} className={classes.card} key={i}>
+        (<Card style = {{marginTop: '25px', marginLeft: 'auto', marginRight: 'auto'}} className={classes.card} key={i}>
           <CardMedia
             className={classes.cardMedia}
             image={this.props.products[i]['imagePath']} // eslint-disable-line max-len
@@ -54,7 +54,7 @@ class ProductDisplay extends React.Component {
     console.log(products)
 
     return (
-      <Grid style={{paddingLeft: '80px', marginLeft: 'auto', marginRight: 'auto', width: '100%'}}container spacing={40}>
+      <Grid style={{marginLeft: 'auto', marginRight: 'auto', width: '100%'}}container spacing={40}>
         {/* //Should display ProductItems.  */}
         {products}
       </Grid>

@@ -47,7 +47,7 @@ passport.deserializeUser(function(user, done) {
 
 //============> PRODUCT ROUTES <===============\\
 
-app.get('/', (req, res) => {
+app.get('/', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
@@ -59,7 +59,7 @@ app.get('/cart', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/main',
+app.get('/main', loggedIn,
   itemController.getAllItems
 )
 
