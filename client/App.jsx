@@ -80,7 +80,7 @@ function App(props) {
             <Typography variant="title" color="inherit" nowrap='true'>
               ESTORE FOR THINGS THAT ARE Toight.
             </Typography>
-            <Button variant="raised" color="inherit" nowrap='true'>
+            <Button style={{paddingRight: '25'}} variant="outline" color="inherit" nowrap='true'>
               Logout
             </Button>
           </Toolbar>
