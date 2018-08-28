@@ -11,7 +11,7 @@ class ProductDisplay extends React.Component {
   render () {
     let products = [];
     for(let i = 0; i < this.props.products.length; i++) {
-      products.push((<SingleProduct key={i} itemName={this.props.products[i].title} url={this.props.products[i]['product-image-path']} />));
+      products.push((<SingleProduct key={i} itemName={this.props.products[i].title} url={this.props.products[i]['imagePath']} />));
     }
 
     return (
