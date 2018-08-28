@@ -76,7 +76,7 @@ class Chat extends Component {
     })
 
     return(
-      <div className="chat-box">
+      <div style={{'position': 'fixed'}}className="chat-box">
         <div className="chat-head">
           <h2>Customer Service Rep</h2>
           <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16" onClick={this.toggleChat}/>
