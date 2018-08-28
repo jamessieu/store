@@ -22,6 +22,7 @@ app.use(passport.session());
 
 function loggedIn(req, res, next) {
   if(req.user && sessions[req.user.displayName]) {
+    res.locals = req.user.name.givenName;
     next();
   } else {
     res.redirect('/login');
@@ -47,7 +48,7 @@ passport.deserializeUser(function(user, done) {
 
 //============> PRODUCT ROUTES <===============\\
 
-app.get('/', (req, res) => {
+app.get('/', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
@@ -55,8 +56,12 @@ app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/cart', (req, res) => {
+app.get('/cart', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
+})
+
+app.get('/getname', loggedIn, (req, res) => {
+  res.send(res.locals);
 })
 
 app.get('/main',
