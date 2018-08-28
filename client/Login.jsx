@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Wrapper from './containers/MainContainer.jsx';
+import Wrapper from './containers/LoginContainer.jsx';
 
 
-class App extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,4 +16,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Login;
