@@ -12,7 +12,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config()
 const session = require('express-session')
 
-
 const PORT = process.env.PORT || 3000;
 
 let sessions = {secret: 'TESTING', name: 'login', proxy: true, resave: true, saveUninitialized: false};
@@ -38,11 +37,11 @@ function createUserAndCart(username) {
 }
 
 function loggedIn(req, res, next) {
-    if(req.user && sessions[req.user.displayName]) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+  if(req.user && sessions[req.user.displayName]) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
 }
 
 passport.use(new GoogleStrategy({
@@ -65,37 +64,28 @@ passport.deserializeUser(function(user, done) {
 
 //============> PRODUCT ROUTES <===============\\
 
-app.get('/', loggedIn, (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/main', loggedIn,
-    itemController.getAllItems
+app.get('/cart', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
+})
+
+app.get('/main',
+  itemController.getAllItems
 )
 
 app.post('/api/users', customerController.createUser)
-
 app.get('/googleLogin', passport.authenticate('google', {scope: ['profile']}));
-
 app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/login'}), function(req, res) {
     res.redirect('/');
 })
-
-// app.get('/mens',
-//     eventController.filterByMen,
-// )
-
-// app.get('/womens',
-//     eventController.filterByWomen,
-// )
-
-// app.get('/cart',
-//     eventController.getCart,
-// )
 
 app.use(express.static(path.join(__dirname, '../build')));
 
