@@ -33,15 +33,18 @@ class ProductDisplay extends React.Component {
             <Typography gutterBottom variant="headline" component="h2">
               {this.props.products[i].title}
             </Typography>
+            {/* <Typography>
+              Price: ${this.props.products[i].price}
+            </Typography> */}
             <Typography>
-              This is a media card. You can use this section to describe the content.
+              Price: ${this.props.products[i].price}                                         
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button variant="outlined" size="small" color="secondary">
               View
             </Button>
-            <Button size="small" color="primary">
+            <Button variant="outlined" size="small" color="secondary">
               Add to Cart
             </Button>
           </CardActions>

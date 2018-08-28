@@ -52,6 +52,7 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    minWidth: 500
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -80,7 +81,10 @@ function App(props) {
             <Typography variant="title" color="inherit" nowrap='true'>
               ESTORE FOR THINGS THAT ARE Toight.
             </Typography>
-            <Button variant="raised" color="inherit" nowrap='true'>
+            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '10%'}}>
+              Cart
+            </Button>
+            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
               Logout
             </Button>
           </Toolbar>
