@@ -1,14 +1,18 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const eventController = require('./db/eventControllers/productEventController.js');
+const bodyParser = require('body-parser');
+const itemController = require('./controllers/itemController.js');
+const customerController = require('./controllers/customerController.js');
 var server = require('http').Server(app);
-const db = require('./db/postgresql.js');
+const db = require('./postgresql.js');
 const http = require('http');
 const socket = require('socket.io');
 
 
 const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '../build')));
 
@@ -16,8 +20,10 @@ app.use(express.static(path.join(__dirname, '../build')));
 //============> PRODUCT ROUTES <===============\\
 
 app.get('/main',
-    eventController.getAllProducts,
+    itemController.getAllItems
 )
+
+app.post('/api/users', customerController.createUser)
 
 // app.get('/mens',
 //     eventController.filterByMen,
