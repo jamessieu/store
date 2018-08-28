@@ -77,14 +77,11 @@ app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/logi
 //     eventController.getCart,
 // )
 
-<<<<<<< HEAD
 app.use(express.static(path.join(__dirname, '../build')));
 
 
 
 
-=======
->>>>>>> master
 //==================> SOCKETS <=====================\\
 
 const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
