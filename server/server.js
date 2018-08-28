@@ -87,7 +87,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 //==================> SOCKETS <=====================\\
 
-const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
+const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so toight`));
 
 const io = socket(server);
 
