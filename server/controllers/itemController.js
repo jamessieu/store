@@ -1,6 +1,6 @@
 const db = require("../postgresql.js");
 
-function getAllProducts (req, res, next) {
+function getAllItems (req, res, next) {
     db.query('SELECT * FROM "Product" ')
     .then(productData => {
     res.send(productData);
@@ -21,9 +21,13 @@ function filterByWomen(req, res, next) {
     })
 };
 
+function addItemToCart(req, res, next) {
+    const username = req.body.username;
+}
+
 
 module.exports = {
-    getAllProducts,
+    getAllItems,
     filterByMen,
     filterByWomen
 };
