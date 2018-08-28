@@ -4,22 +4,23 @@ import SingleProduct from '../components/SingleProduct.jsx'
 
 
 class ProductDisplay extends React.Component {
-
-  constructor () {
-    super();
+  constructor(props) {
+    super(props);
   }
   
   render () {
     let products = [];
     for(let i = 0; i < this.props.products.length; i++) {
-      products.push((<SingleProduct key={"productId-"+i} itemName={this.props.products[i].title} url={this.props.products[i]['product-image-path']} />));
+      products.push((<SingleProduct key={i} itemName={this.props.products[i].title} url={this.props.products[i]['product-image-path']} />));
     }
 
-    return (<div className="productdisplay"> 
-            {/* //Should display ProductItems.  */}
-            <p>Super Cool Products</p>
-            {products}
-            </div>);
+    return (
+      <div className="productdisplay"> 
+        {/* //Should display ProductItems.  */}
+        <p>Super Cool Products</p>
+        {products}
+      </div>
+    );
   }
 
 }
