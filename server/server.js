@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const eventController = require('./db/eventControllers/productEventController.js');
+<<<<<<< HEAD
 let server = require('http').Server(app);
+=======
+// var server = require('http').Server(app);
+>>>>>>> master
 const db = require('./db/postgresql.js');
 const http = require('http');
 const socket = require('socket.io');
@@ -78,18 +82,23 @@ app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/logi
 //     eventController.getCart,
 // )
 
+<<<<<<< HEAD
 app.use(express.static(path.join(__dirname, '../build')));
 
 
 
 
+=======
+>>>>>>> master
 //==================> SOCKETS <=====================\\
-server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
+
+const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so tight`));
 
 const io = socket(server);
 
 io.on('connection', (socket) => {
-    socket.on('SEND_MESSAGE', function(data){
-        io.emit('RECEIVE_MESSAGE', data);
-    })
+  console.log("socket: ", socket.id);
+  socket.on('SEND_MESSAGE', function(data){
+    io.sockets.emit('RECEIVE_MESSAGE', data);
+  })
 });
