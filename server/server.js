@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const eventController = require('./db/eventControllers/productEventController.js');
-const db = require('./db/postgresql.js');
+const itemController = require('./controllers/itemController.js');
+const customerController = require('./controllers/customerController.js');
+const db = require('./postgresql.js');
 const http = require('http');
 const socket = require('socket.io');
 const bodyParser = require('body-parser');
@@ -56,8 +57,10 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/main',
-    eventController.getAllProducts,
+    itemController.getAllItems
 )
+
+app.post('/api/users', customerController.createUser)
 
 app.get('/googleLogin', passport.authenticate('google', {scope: ['profile']}));
 
