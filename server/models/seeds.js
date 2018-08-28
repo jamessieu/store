@@ -1,6 +1,16 @@
-//var users = [['John', 23], ['Mike', 30], ['David', 18]]
+const db = require("../postgresql.js");
 
-const itemPath = [ 'https://target.scene7.com/is/image/Target/52377357?wid=1400',
+const color = ['black','red', 'blue', 'blue', 'blue', 'black', 'blue', 'green', 'blue', 'blue', 'black'];
+
+const genre = ['men','women','men','men','non-binary','men','men','women','women','kids','men'];
+
+const title = ['T-Shirt','Blouse','Sweater','Sweater','Sweater','Jacket','Sweater','Sweater','Sweater','Snowpants','T-Shirt'];
+
+const price = ['15.99','35.99','18.99','18.99','18.99','18.99','18.99','18.99','18.99','18.99','15.99'];
+
+const quantity = [30, 16, 1, 8, 15, 19, 56, 12, 99, 75, 30]
+
+const imagePath = [ 'https://target.scene7.com/is/image/Target/52377357?wid=1400',
  'https://target.scene7.com/is/image/Target/50362600?wid=1400',
  'https://target.scene7.com/is/image/Target/53152327?wid=1400',
  'https://target.scene7.com/is/image/Target/52569569?wid=1400',
@@ -12,12 +22,18 @@ const itemPath = [ 'https://target.scene7.com/is/image/Target/52377357?wid=1400'
  'https://target.scene7.com/is/image/Target/53325630?wid=1400',
  'https://target.scene7.com/is/image/Target/52377357?wid=1400'];
 
- const colors = ['black','red', 'blue', 'blue', 'blue', 'black', 'blue', 'green', 'blue', 'blue', 'black'];
+const items = []
 
+for (let i = 0; i < 11; i++) {
+  items.push({quantity: quantity[i], title: title[i], genre: genre[i], color: color[i], imagePath: imagePath[i], price: price[i]});
+}
 
+const values = new Inserts('${quantity}, ${title}, ${genre}, ${color}, ${imagePath}, ${price}', items);
 
-
-
-
-const quantity = [30, 16, 1, 8, 15, 19, 56, 12, 99, 75, 30]
-
+db.none(`INSERT INTO Item(quantity, title, genre, color, "ImagePath", price) VALUES $1`, values)
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        // Error, no records inserted
+    });

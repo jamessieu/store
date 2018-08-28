@@ -26,7 +26,7 @@ class ProductDisplay extends React.Component {
         (<Card style = {{margin: '25px'}} className={classes.card} key={i}>
           <CardMedia
             className={classes.cardMedia}
-            image={this.props.products[i]['product-image-path']} // eslint-disable-line max-len
+            image={this.props.products[i]['imagePath']} // eslint-disable-line max-len
             title={this.props.products[i].title}
           />
           <CardContent className={classes.cardContent}>
