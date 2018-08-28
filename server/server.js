@@ -20,6 +20,22 @@ app.use(session(sessions));
 app.use(bodyParser.json(), passport.initialize());
 app.use(passport.session());
 
+
+//This is ugly, I know.
+function createUserAndCart(username) {
+    db.one(`INSERT INTO "User"("username") VALUES($1) RETURNING "id"`, [username])
+        .then(data => {
+            userId = data.id;
+            db.one(`INSERT INTO "Cart"("userId") VALUES($1) RETURNING "id"`, [userId])
+                .then(data => {})
+                .catch(error => {
+                    console.log('ERROR:', error);
+                });
+        }).catch(error => {
+            console.log('ERROR:', error);
+        });
+}
+
 function loggedIn(req, res, next) {
   if(req.user && sessions[req.user.displayName]) {
     next();
@@ -34,10 +50,11 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:3000/googleOAuth'
 }, function(accessToken, refreshToken, profile, cb) {
     sessions[profile.displayName] = profile;
-    return cb(null, profile);
+    return cb(null, {displayName: profile.displayName});
 }));
 
 passport.serializeUser(function(user, done) {
+    createUserAndCart(user.displayName);
     done(null, user);
 });
 
@@ -46,6 +63,7 @@ passport.deserializeUser(function(user, done) {
 })
 
 //============> PRODUCT ROUTES <===============\\
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
