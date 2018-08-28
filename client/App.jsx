@@ -85,7 +85,7 @@ function App(props) {
                 Cart
               </Button>
             </div>
-            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
+            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
               Logout
             </Button>
           </Toolbar>
