@@ -2,11 +2,6 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const eventController = require('./db/eventControllers/productEventController.js');
-<<<<<<< HEAD
-let server = require('http').Server(app);
-=======
-// var server = require('http').Server(app);
->>>>>>> master
 const db = require('./db/postgresql.js');
 const http = require('http');
 const socket = require('socket.io');
