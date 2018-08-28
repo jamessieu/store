@@ -56,7 +56,7 @@ class Chat extends Component {
 
   toggleChat(e) {
     e.preventDefault();
-    $(".chat-head img").on("click", function() {
+    // $(".chat-head img").on("click", function() {
       var src = $(".chat-head img").attr("src");
       $(".chat-body").toggle();
       if (src == "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png") {
@@ -64,7 +64,7 @@ class Chat extends Component {
       } else {
         $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png");
       }
-    });
+    // });
   }
 
   render(){
@@ -88,7 +88,7 @@ class Chat extends Component {
             </div>
           </div>
           <div className="chat-text">
-            <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
+            <input type="text" placeholder="Message" className="form-control" value={this.state.message} onKeyDown={ev => {if(ev.keyCode === 13){this.sendMessage(ev)}}} onChange={ev => this.setState({message: ev.target.value})}/>
           </div>
           <div className="send">
             <button onClick={this.sendMessage}>SEND</button>
