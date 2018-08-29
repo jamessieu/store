@@ -1,6 +1,6 @@
-Master Branch
+Master
 [![Build Status](https://travis-ci.org/Baratheon-iter/store.svg?branch=master)](https://travis-ci.org/Baratheon-iter/store) 
-Staging Branch
+Staging
 [![Build Status](https://travis-ci.org/Baratheon-iter/store.svg?branch=staging)](https://travis-ci.org/Baratheon-iter/store)
 # store
 Store where you can buy things
