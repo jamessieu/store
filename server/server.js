@@ -23,10 +23,10 @@ app.use(passport.session());
 
 //This is ugly, I know.
 function createUserAndCart(username) {
-    db.one(`INSERT INTO "User"("username") VALUES($1) RETURNING "id"`, [username])
+    db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
-            userId = data.id;
-            db.one(`INSERT INTO "Cart"("userId") VALUES($1) RETURNING "id"`, [userId])
+            customerId = data.id;
+            db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
                 .then(data => {})
                 .catch(error => {
                     console.log('ERROR:', error);
