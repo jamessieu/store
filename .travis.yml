@@ -12,7 +12,9 @@ script:
   - cp appspec.yml toZip/appspec.yml
   - cp -r build toZip/build
   - cp -r server toZip/server
-  - zip -r build.zip toZip/*
+  - cd toZip
+  - zip -r ../build.zip *
+  - cd ..
   - mkdir -p dpl_cd_upload
   - mv build.zip dpl_cd_upload/build.zip
 deploy:
