@@ -1,12 +1,11 @@
 CREATE TABLE "customer" (
 	"id" serial NOT NULL,
-	"username" varchar NOT NULL,
+	"username" varchar NOT NULL UNIQUE,
 	"admin" BOOLEAN NOT NULL DEFAULT 'false',
 	CONSTRAINT customer_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
-
 
 
 CREATE TABLE "cart" (
