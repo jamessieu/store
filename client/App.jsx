@@ -80,14 +80,16 @@ function App(props) {
             <Typography variant="title" color="inherit" nowrap='true'>
               ESTORE FOR THINGS THAT ARE Toight
             </Typography>
-            <div onClick={() => window.location.href="http://localhost:3000/cart"} style = {{position: 'absolute', right: '10%'}}>
+            <div onClick={() => window.location.href= window.location.href.split('/')[0] + "/cart"} style = {{position: 'absolute', right: '10%'}}>
               <Button variant="raised" color="secondary" nowrap='true' >
                 Cart
               </Button>
             </div>
-            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
+            <div onClick={() => window.location.href= window.location.href.split('/')[0] + "/logout"} style = {{position: 'absolute', right: '2%'}}>
+            <Button variant="raised" color="secondary" nowrap='true'>
               Logout
             </Button>
+            </div>
           </Toolbar>
         </AppBar>
         <main>
@@ -104,16 +106,18 @@ function App(props) {
               <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                   <Grid item>
-                  <div onClick={() => window.location.href="http://localhost:3000/cart"}>
+                  <div onClick={() => window.location.href= window.location.href.split('/')[0] + "/cart"}>
                     <Button variant="contained" color="primary">
                       Checkout
                     </Button>
                   </div>
                   </Grid>
                   <Grid item>
+                    <div onClick={() => window.location.href= "https://www.amazon.com"}>
                     <Button variant="outlined" color="primary">
                       Be lame
                     </Button>
+                    </div>
                   </Grid>
                 </Grid>
               </div>
