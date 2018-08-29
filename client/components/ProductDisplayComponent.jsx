@@ -33,7 +33,7 @@ class ProductDisplay extends Component {
   
   addCart(item){
     function inner(e) {
-      alert('added item');
+      // alert('added item');
       this.props.onAddCartClick(item);
     }
     return inner.bind(this);
@@ -66,8 +66,7 @@ class ProductDisplay extends Component {
             <Button variant="outlined" size="small" color="secondary">
               View
             </Button>
-              <Button variant="outlined" size="small" color="secondary">
-              {/* <Button variant="outlined" size="small" color="secondary" onClick={this.addCart(this.props.products[i].id)}> */}
+              <Button variant="outlined" size="small" color="secondary" onClick={this.addCart(this.props.products[i].id)}>
                 Add to Cart
               </Button>
           </CardActions>

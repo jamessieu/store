@@ -30,6 +30,18 @@ const products = (state=initialState, action) => {
                     return product;
                 }
             });
+            const cartObj = {};
+            let itemExists = false;
+            cart.forEach(itemInCart => {
+                if(itemInCart.id === action.productID){
+                    itemInCart.count += 1;
+                    itemExists = true;
+                }
+            })
+            if(!itemExists){
+                cart.push({id: action.productID, count: 1})
+            }
+            console.log('cart: ', cart);
 
             return Object.assign(state, {stock, cart})
             
