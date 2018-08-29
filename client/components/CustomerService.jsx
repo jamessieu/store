@@ -39,6 +39,7 @@ class Chat extends Component {
     // })
 
     this.props.initializeSocket(io('localhost:3000'));
+    
 
     // this.props.socket.on('RECEIVE_MESSAGE', data => {
     //   that.props.addMessage(data);
