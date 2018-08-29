@@ -5,7 +5,7 @@ import io from "socket.io-client";
 const initialState = {
   username: 'default',
   messages: [],
-  socket: io('localhost:3000'),
+  socket: io('192.168.0.65:3000'),
 }
 
 const userInfoReducer = (state=initialState, action) => {

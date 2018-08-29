@@ -21,7 +21,7 @@ app.use(bodyParser.json(), passport.initialize());
 app.use(passport.session());
 
 
-//This is ugly, I know.
+//This is ugly, I know. <- lol
 function createUserAndCart(username) {
     db.one(`INSERT INTO "User"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
