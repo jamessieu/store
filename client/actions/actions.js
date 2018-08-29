@@ -1,25 +1,17 @@
 import * as types from '../constants/actionTypes';
 
-export function fetchProducts() {
+export const fetchUserInfo = () => {
   return dispatch => {
-    dispatch(fetchProductsBegin());
-    return fetch("/main")
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(fetchProductsSuccess(json.products));
-        return json.products;
+    return fetch('/getUserInfo')
+      .then(function(response) {
+        return response.text()
+          .then(function(text) {
+            const userObj = JSON.parse(text);
+            dispatch(initializeSocketRoom(`${userObj.id}`));
+            dispatch(updateUserName(userObj.name));
+        });
       })
-      .catch(error => dispatch(fetchProductsFailure(error)));
-  };
-  // Handle HTTP errors since fetch won't.
-  function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
   }
-  
 }
 
 export const addMessage = message => ({
@@ -32,8 +24,8 @@ export const updateUserName = user => ({
   payload: user
 })
 
-export const initializeSocket = socket => ({
-  type: types.INITIALIZE_SOCKET,
+export const initializeSocketRoom = socket => ({
+  type: types.INITIALIZE_SOCKET_ROOM,
   payload: socket
 })
 
@@ -48,3 +40,4 @@ export const loadProducts = (products) => {
     payload: products,
   }
 }
+

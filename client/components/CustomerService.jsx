@@ -1,62 +1,67 @@
 import React, { Component } from 'react';
 import $ from 'jquery'; 
-import io from "socket.io-client";
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions.js'
 
 const mapStateToProps = store => ({
   username: store.chat.username,
   messages: store.chat.messages,
-  socket: store.chat.socket
+  socket: store.chat.socket,
+  room: store.chat.room
 });
 
 const dispatchStateToProps = dispatch => ({
   addMessage: (message) => dispatch(actions.addMessage(message)),
-  updateUserName: (name) => dispatch(actions.updateUserName(name)),
-  initializeSocket: (socket) => dispatch(actions.initializeSocket(socket))
+  fetchUserInfo: () => dispatch(actions.fetchUserInfo())
 });
 
 class Chat extends Component {
   constructor(props) {
     super(props);
 
-    // keeping this because it's the only thing that updates the page :(
     this.state = {
       message: '',
       dummy: false
     };
 
-    const that = this;
-    
-    fetch('/getname').then(function(response) {
-      return response.text().then(function(text) {
-        that.props.updateUserName(text);
-      });
-    })
-
-    // fetch('/getUniqueId').then((response) => {
-
-    // })
-
-    this.props.initializeSocket(io('localhost:3000'));
-    
-
-    // this.props.socket.on('RECEIVE_MESSAGE', data => {
-    //   that.props.addMessage(data);
-
-    //   // I made this dummy boolean to force the page to rerender.
-    //   // It's probably not right but it works so there.
-    //   this.setState(previousState => {
-    //     previousState.received === !previousState.received;
-    //     return previousState;
-    //   })
-    // });
-
     this.sendMessage = this.sendMessage.bind(this);
+    this.ensureSocketIsSet = this.ensureSocketIsSet.bind(this);
   }
 
   componentDidMount() {
     $(".chat-body").toggle();
+
+    // get user info from server
+    this.props.fetchUserInfo();
+
+    // waits till socket is set before listening for messages
+    const that = this;
+    this.ensureSocketIsSet(that)
+    .then(() => {
+      // join private room
+      that.props.socket.emit('room', that.props.room);
+
+      // listen for messages
+      that.props.socket.on('RECEIVE_MESSAGE', data => {
+        that.props.addMessage(data);
+
+        // I made this dummy boolean to force the page to rerender.
+        // It's probably not right but it works so there.
+        that.setState(previousState => {
+          previousState.received === !previousState.received;
+          return previousState;
+        })
+      });
+    })
+  }
+
+  ensureSocketIsSet(that) {
+    return new Promise((resolve, reject) => {
+      (function checkSocket() {
+        if (that.props.room) return resolve();
+        setTimeout(checkSocket, 30);
+      })();
+    })
   }
 
   sendMessage = ev => {
@@ -65,6 +70,7 @@ class Chat extends Component {
       this.props.socket.emit('SEND_MESSAGE', {
         author: this.props.username,
         message: this.state.message,
+        admin: false
       });
       this.setState({message: ''});
     }
@@ -84,8 +90,9 @@ class Chat extends Component {
   render(){
 
     const messages = this.props.messages.map((message, i) => {
+      const direction = message.admin ? 'msg-receive' : 'msg-send';
       return (
-        <div style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}} key={i} className="msg-receive"><b>{message.author}</b>: {message.message}</div>
+        <div style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}} key={i} className={direction}><b>{message.author}</b>: {message.message}</div>
       )
     })
 
