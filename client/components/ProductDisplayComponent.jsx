@@ -21,13 +21,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
   onAddCartClick: productID => dispatch(actions.addCart(productID))
-  // .then(() => {
-  //   this.snackbar.showMessage(
-  //     'Yoooo we did it!',
-  //     'Undo', () =>  4)
-  // })
 });
 
 class ProductDisplay extends Component {
@@ -57,7 +51,7 @@ class ProductDisplay extends Component {
           <CardMedia
           
             className={classes.cardMedia}
-            image={this.props.products[i]['imagePath']} // eslint-disable-line max-len
+            image={this.props.products[i].imagePath} // eslint-disable-line max-len
             title={this.props.products[i].title}
           />
           <CardContent className={classes.cardContent}>
@@ -72,7 +66,8 @@ class ProductDisplay extends Component {
             <Button variant="outlined" size="small" color="secondary">
               View
             </Button>
-              <Button variant="outlined" size="small" color="secondary" onClick={this.addCart(this.props.products[i].ProductID)}>
+              <Button variant="outlined" size="small" color="secondary">
+              {/* <Button variant="outlined" size="small" color="secondary" onClick={this.addCart(this.props.products[i].id)}> */}
                 Add to Cart
               </Button>
           </CardActions>
