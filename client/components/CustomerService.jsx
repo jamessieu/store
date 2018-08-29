@@ -12,7 +12,8 @@ const mapStateToProps = store => ({
 
 const dispatchStateToProps = dispatch => ({
   addMessage: (message) => dispatch(actions.addMessage(message)),
-  updateUserName: (name) => dispatch(actions.updateUserName(name))
+  updateUserName: (name) => dispatch(actions.updateUserName(name)),
+  initializeSocket: (socket) => dispatch(actions.initializeSocket(socket))
 });
 
 class Chat extends Component {
@@ -26,22 +27,29 @@ class Chat extends Component {
     };
 
     const that = this;
-    this.props.socket.on('RECEIVE_MESSAGE', data => {
-      that.props.addMessage(data);
-
-      // I made this dummy boolean to force the page to rerender.
-      // It's probably not right but it works so there.
-      this.setState(previousState => {
-        previousState.received === !previousState.received;
-        return previousState;
-      })
-    });
-
+    
     fetch('/getname').then(function(response) {
       return response.text().then(function(text) {
         that.props.updateUserName(text);
       });
     })
+
+    // fetch('/getUniqueId').then((response) => {
+
+    // })
+
+    this.props.initializeSocket(io('localhost:3000'));
+
+    // this.props.socket.on('RECEIVE_MESSAGE', data => {
+    //   that.props.addMessage(data);
+
+    //   // I made this dummy boolean to force the page to rerender.
+    //   // It's probably not right but it works so there.
+    //   this.setState(previousState => {
+    //     previousState.received === !previousState.received;
+    //     return previousState;
+    //   })
+    // });
 
     this.sendMessage = this.sendMessage.bind(this);
   }

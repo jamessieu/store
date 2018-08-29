@@ -5,13 +5,16 @@ import io from "socket.io-client";
 const initialState = {
   username: 'default',
   messages: [],
-  socket: io('localhost:3000'),
+  socket: null,
 }
 
 const userInfoReducer = (state=initialState, action) => {
   const messages = state.messages;
 
   switch(action.type) {
+    case types.INITIALIZE_SOCKET:
+      return Object.assign(state, { socket: action.payload })
+
     case types.ADD_MESSAGE:
       messages.push(action.payload);
       return Object.assign(state, { messages } )

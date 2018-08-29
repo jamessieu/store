@@ -93,10 +93,13 @@ app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/logi
 
 app.use(express.static(path.join(__dirname, '../build')));
 
-
-
-
 //==================> SOCKETS <=====================\\
+
+const getUserName = () => {
+  return new Promise((resolve, reject) => {
+    
+  })
+}
 
 const server = app.listen(PORT, console.log(`Listening on port: ${PORT} ==> this is so toight`));
 
@@ -104,6 +107,8 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
   console.log("socket: ", socket.id);
+  socket
+
   socket.on('SEND_MESSAGE', function(data){
     io.sockets.emit('RECEIVE_MESSAGE', data);
   })
