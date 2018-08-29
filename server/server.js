@@ -27,9 +27,12 @@ function createUserAndCart(username, user, done) {
     db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
             let customerId = data.id;
+            let adminPrivileges = data.admin;
+            console.log(data);
             db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
                 .then(data => {
                   user.id = customerId;
+                  user.cartid = data.id;
                   done(null, user);
                 })
                 .catch(error => {
@@ -44,6 +47,7 @@ function checkIfUserExists(username, user, done) {
   db.one('SELECT * FROM customer WHERE username = $1', username)
       .then(customer => {
           user.id = customer.id;
+          user.admin = customer.admin;
           done(null, user);
       })
       .catch( () => {
@@ -97,9 +101,12 @@ app.get('/main', loggedIn,
   itemController.getAllItems
 )
 
+
 //==========> OTHER ROUTES <===========\\
 
-app.post('/api/users', customerController.createUser)
+app.post('/api/additem', itemController.findCustomerCart, itemController.checkIfItemAlreadyAddedToCart, itemController.incrementCartItemQuantity);
+app.post('/api/customers', customerController.createUser);
+
 app.get('/googleLogin', passport.authenticate('google', {scope: ['profile']}));
 app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/login'}), function(req, res) {
     res.redirect('/');
