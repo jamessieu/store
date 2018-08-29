@@ -92,11 +92,6 @@ app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/logout', (req, res) => {
-  req.logOut();
-  res.redirect('/login');
-})
-
 app.get('/cart', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
