@@ -14,6 +14,11 @@ const session = require('express-session')
 let userId; // will be set in loggedIn function
 
 const PORT = process.env.PORT || 3000;
+let callbackURL = "http://localhost:3000/googleOAuth";
+
+if(process.env.NODE_ENV === "Production") {
+  callbackURL = "http://ec2-54-161-32-236.compute-1.amazonaws.com/googleOAuth";
+}
 
 let sessions = {secret: 'TESTING', name: 'login', proxy: true, resave: true, saveUninitialized: false};
 
@@ -66,7 +71,7 @@ function loggedIn(req, res, next) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/googleOAuth'
+    callbackURL: callbackURL
 }, function(accessToken, refreshToken, profile, cb) {
     sessions[profile.displayName] = profile;
     return cb(null, {displayName: profile.displayName, profile: profile});
