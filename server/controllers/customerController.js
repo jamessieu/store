@@ -12,19 +12,15 @@ function getCustomer (req, res, next) {
 
 /////LEGACY CODE
 
-
 module.exports = {
   createUser: (req, res, next) => {
     const username = req.body.username;
-    console.log(typeof username);
     db.one('SELECT * FROM customer WHERE username = $1', username)
       .then(customer => {
-          //console.log(customer);
           res.json(customer.id) // print user object;
       })
       .catch(error => {
-
-          res.send("FUCK")   
+          res.send("Oops")   
       });     
     //let customerId;
     
@@ -73,7 +69,6 @@ module.exports = {
   checkIfUserExists: (req, res, next) => {
       db.one('SELECT * FROM customers WHERE username = $1', username)
           .then(customer => {
-              console.log(user);
           })
           .catch(error => {   
           });  
