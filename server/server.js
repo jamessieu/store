@@ -22,18 +22,32 @@ app.use(passport.session());
 
 
 //This is ugly, I know.
-function createUserAndCart(username) {
+function createUserAndCart(username, user, done) {
     db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
             let customerId = data.id;
             db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
-                .then(data => {})
+                .then(data => {
+                  user.id = customerId;
+                  done(null, user);
+                })
                 .catch(error => {
-                    console.log('ERROR:', error);
+                    console.log('ERROR AT CART CREATION:', error);
                 });
         }).catch(error => {
-            console.log('ERROR:', error);
+            console.log('ERROR AT CUSTOMER CREATION:', error);
         });
+}
+
+function checkIfUserExists(username, user, done) {
+  db.one('SELECT * FROM customer WHERE username = $1', username)
+      .then(customer => {
+          user.id = customer.id;
+          done(null, user);
+      })
+      .catch( () => {
+        return createUserAndCart(username, user, done);    
+      });
 }
 
 function loggedIn(req, res, next) {
@@ -55,8 +69,12 @@ passport.use(new GoogleStrategy({
 }));
 
 passport.serializeUser(function(user, done) {
-    createUserAndCart(user.displayName);
-    done(null, user);
+
+    checkIfUserExists(user.displayName, user, done);
+
+    //console.log(user)
+
+    //done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
@@ -66,6 +84,7 @@ passport.deserializeUser(function(user, done) {
 //============> PRODUCT ROUTES <===============\\
 
 app.get('/', loggedIn, (req, res) => {
+  console.log(req.user);
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
