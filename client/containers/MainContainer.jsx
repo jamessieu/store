@@ -7,9 +7,8 @@ import * as actions from '../actions/actions.js'
 import classNames from 'classnames';
 
 const mapStateToProps = store => {
-  console.log(store)
   return {
-  products: store.products,
+  products: store.products.stock,
 }};
 
 const dispatchStateToProps = dispatch => ({

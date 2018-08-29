@@ -22,6 +22,11 @@ export function fetchProducts() {
   
 }
 
+export const addCart = productID => ({
+  type: types.ADD_CART,
+  productID: productID
+})
+
 // export const fetchProductsBegin = () => {
 //   type: types.FETCH_PRODUCTS_BEGIN
 // }

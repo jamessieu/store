@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Chat from './components/CustomerService.jsx'
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +17,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import MainContainer from './containers/MainContainer.jsx';
+// import { SnackbarProvider } from 'material-ui-snackbar-provider'
+// import withSnackbar from 'material-ui-snackbar-provider/lib/withSnackbar';
+
 
 const styles = theme => ({
   appBar: {
@@ -73,18 +77,19 @@ function App(props) {
 
   return (
     <div>
+      {/* <SnackbarProvider snackbarProps={{ autoHideDuration: 4000 }}> */}
       <React.Fragment>
         <CssBaseline />
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <CameraIcon className={classes.icon} />
             <Typography variant="title" color="inherit" nowrap='true'>
-              ESTORE FOR THINGS THAT ARE Toight.
+              E-STORE FOR THINGS THAT ARE Toight.
             </Typography>
-            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '10%'}}>
+            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '10%', color: 'white', backgroundColor: 'gray'}}>
               Cart
             </Button>
-            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
+            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '2%', color: 'white', backgroundColor: 'gray'}}>
               Logout
             </Button>
           </Toolbar>
@@ -135,6 +140,7 @@ function App(props) {
         {/* End footer */}
       </React.Fragment>
       <Chat />
+      {/* </SnackbarProvider> */}
     </div>
   );
 }
