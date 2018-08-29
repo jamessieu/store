@@ -104,6 +104,10 @@ app.get('/cart', loggedIn, (req, res) => {
 app.get('/main', loggedIn,
   itemController.getAllItems
 )
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});
 
 
 //==========> OTHER ROUTES <===========\\
