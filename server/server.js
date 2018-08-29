@@ -103,7 +103,7 @@ app.get('/main', loggedIn,
 
 //==========> OTHER ROUTES <===========\\
 
-app.post('/api/additem', itemController.findCustomerCart, itemController.checkIfItemAlreadyAddedToCart, itemController.incrementCartItemQuantity);
+app.post('/api/additem', itemController.findCustomerCart, itemController.checkIfItemAlreadyAddedToCart, itemController.incrementCartItemQuantity, itemController.decrementStockItemQuantity);
 app.post('/api/customers', customerController.createUser);
 
 app.get('/googleLogin', passport.authenticate('google', {scope: ['profile']}));
