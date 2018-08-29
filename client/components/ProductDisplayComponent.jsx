@@ -39,6 +39,7 @@ class ProductDisplay extends Component {
   
   addCart(item){
     function inner(e) {
+      alert('added item');
       this.props.onAddCartClick(item);
     }
     return inner.bind(this);

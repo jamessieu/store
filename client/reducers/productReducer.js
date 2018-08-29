@@ -35,6 +35,7 @@ const products = (state=initialState, action) => {
         case types.LOAD_PRODUCTS:
             let items = action.payload;
             // return [...state, ...items];
+            console.log('state: ', state);
             return Object.assign(state, {stock: items, cart: []})
         case types.ADD_CART:
             cart = state.cart;
@@ -53,19 +54,6 @@ const products = (state=initialState, action) => {
                 }
             });
 
-                                
-            //iterate through array of objects
-                //if exits, increment by 1
-                //no, create and set count to 1 and push to array
-            //     console.log(cart.length);
-            // for(let x = 0; x < cart.length; x += 1){
-            //     console.log('cart: ', cart[x]);
-            //     console.log('ProductID:  ',art[x].ProductID, 'actionID: ', action.productID );
-            //     if(cart[x].ProductID === action.productID){
-            //         (cart[x].count === undefined) ? cart.push({ProductID: action.productID, count: 1}) : cart[x].count += 1;
-            //     }
-            // }
-     
             console.log('stock: ', stock);
             // console.log('cart: ', cart);
             return Object.assign(state, {stock, cart})
