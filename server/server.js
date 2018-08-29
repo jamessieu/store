@@ -27,12 +27,11 @@ function createUserAndCart(username, user, done) {
     db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
             let customerId = data.id;
-            let adminPrivileges = data.admin;
-            console.log(data);
             db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
                 .then(data => {
                   user.id = customerId;
                   user.cartid = data.id;
+                  user.admin = false;
                   done(null, user);
                 })
                 .catch(error => {
