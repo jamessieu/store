@@ -1,17 +1,20 @@
 import * as types from '../constants/actionTypes'
-import { userInfo } from 'os';
 import io from "socket.io-client";
 
 const initialState = {
   username: 'default',
   messages: [],
   socket: io('localhost:3000'),
+  room: null
 }
 
 const userInfoReducer = (state=initialState, action) => {
   const messages = state.messages;
 
   switch(action.type) {
+    case types.INITIALIZE_SOCKET_ROOM:
+      return Object.assign(state, { room: action.payload })
+
     case types.ADD_MESSAGE:
       messages.push(action.payload);
       return Object.assign(state, { messages } )
