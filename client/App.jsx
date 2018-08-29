@@ -90,9 +90,11 @@ function App(props) {
                 Cart
               </Button>
             </div>
-            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
-              Logout
-            </Button>
+            <div onClick={() => window.location.href= window.location.href.split('/')[0] + "/logout"} style = {{position: 'absolute', right: '2%'}}>
+              <Button variant="raised" color="secondary" nowrap='true'>
+                Logout
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
         <main>
@@ -115,10 +117,12 @@ function App(props) {
                     </Button>
                   </div>
                   </Grid>
-                  <Grid item>
-                    <Button variant="outlined" color="primary">
-                      Be lame
-                    </Button>
+                    <Grid item>
+                    <div onClick={() => {window.location.href = "https://amazon.com"}}>
+                      <Button variant="outlined" color="primary">
+                        Be lame
+                      </Button>
+                    </div>
                   </Grid>
                 </Grid>
               </div>
