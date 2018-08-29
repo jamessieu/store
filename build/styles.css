@@ -128,13 +128,13 @@ h2 {
 }
 .msg-send, .msg-receive{
     width: 90%;
-    height: 35px;
     padding: 5px 5px 5px 10px;
     margin: 10px auto;
     border-radius: 3px;
     line-height: 30px;
     position: relative;
     color: white;
+    word-wrap: break-word;
 }
 .msg-receive:hover, .msg-send:hover{
     opacity: .9;

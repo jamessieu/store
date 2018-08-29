@@ -55,7 +55,7 @@ class Chat extends Component {
     if (this.state.message.length > 0) {
       this.props.socket.emit('SEND_MESSAGE', {
         author: this.props.username,
-        message: this.state.message
+        message: this.state.message,
       });
       this.setState({message: ''});
     }
@@ -63,22 +63,20 @@ class Chat extends Component {
 
   toggleChat(e) {
     e.preventDefault();
-    // $(".chat-head img").on("click", function() {
-      var src = $(".chat-head img").attr("src");
-      $(".chat-body").toggle();
-      if (src == "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png") {
-        $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png");
-      } else {
-        $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png");
-      }
-    // });
+    let src = $(".chat-head img").attr("src");
+    $(".chat-body").toggle();
+    if (src == "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png") {
+      $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png");
+    } else {
+      $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png");
+    }
   }
 
   render(){
 
     const messages = this.props.messages.map((message, i) => {
       return (
-        <div style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}} key={i} className="msg-receive">{message.author}: {message.message}</div>
+        <div style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}} key={i} className="msg-receive"><b>{message.author}</b>: {message.message}</div>
       )
     })
 
