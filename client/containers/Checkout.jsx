@@ -51,7 +51,7 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Review your order', 'Shipping address', 'Payment details'];
 
 function getStepContent(step) {
   switch (step) {

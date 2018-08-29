@@ -12,6 +12,7 @@ const mapStateToProps = store => ({
 
 const dispatchStateToProps = dispatch => ({
   addMessage: (message) => dispatch(actions.addMessage(message)),
+  updateUserName: (name) => dispatch(actions.updateUserName(name))
 });
 
 class Chat extends Component {
@@ -36,9 +37,10 @@ class Chat extends Component {
       })
     });
 
-    this.props.socket.on('RECEIVE_NAME', name => {
-      console.log(name);
-      // that.props.updateUsername(name);
+    fetch('/getname').then(function(response) {
+      return response.text().then(function(text) {
+        that.props.updateUserName(text);
+      });
     })
 
     this.sendMessage = this.sendMessage.bind(this);
@@ -61,7 +63,7 @@ class Chat extends Component {
 
   toggleChat(e) {
     e.preventDefault();
-    $(".chat-head img").on("click", function() {
+    // $(".chat-head img").on("click", function() {
       var src = $(".chat-head img").attr("src");
       $(".chat-body").toggle();
       if (src == "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png") {
@@ -69,21 +71,21 @@ class Chat extends Component {
       } else {
         $(".chat-head img").attr("src", "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png");
       }
-    });
+    // });
   }
 
   render(){
 
     const messages = this.props.messages.map((message, i) => {
       return (
-        <div key={i} className="msg-receive">{message.author}: {message.message}</div>
+        <div style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}} key={i} className="msg-receive">{message.author}: {message.message}</div>
       )
     })
 
     return(
       <div style={{'position': 'fixed'}}className="chat-box">
         <div className="chat-head">
-          <h2>Customer Service Rep</h2>
+          <h2 style={{fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}}>Customer Service Rep</h2>
           <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16" onClick={this.toggleChat}/>
         </div>
         <div className="chat-body">
@@ -93,7 +95,7 @@ class Chat extends Component {
             </div>
           </div>
           <div className="chat-text">
-            <input type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
+            <input type="text" placeholder="Message" className="form-control" value={this.state.message} onKeyDown={ev => {if(ev.keyCode === 13){this.sendMessage(ev)}}} onChange={ev => this.setState({message: ev.target.value})}/>
           </div>
           <div className="send">
             <button onClick={this.sendMessage}>SEND</button>

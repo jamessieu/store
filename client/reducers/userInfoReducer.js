@@ -16,6 +16,9 @@ const userInfoReducer = (state=initialState, action) => {
       messages.push(action.payload);
       return Object.assign(state, { messages } )
 
+    case types.UPDATE_USERNAME:
+      return Object.assign(state, { username: action.payload } )
+
     default:
       return state;
   }

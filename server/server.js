@@ -25,7 +25,7 @@ app.use(passport.session());
 function createUserAndCart(username) {
     db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
-            customerId = data.id;
+            let customerId = data.id;
             db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
                 .then(data => {})
                 .catch(error => {
@@ -38,6 +38,7 @@ function createUserAndCart(username) {
 
 function loggedIn(req, res, next) {
   if(req.user && sessions[req.user.displayName]) {
+    res.locals = req.user.profile.name.givenName;
     next();
   } else {
     res.redirect('/login');
@@ -50,7 +51,7 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:3000/googleOAuth'
 }, function(accessToken, refreshToken, profile, cb) {
     sessions[profile.displayName] = profile;
-    return cb(null, {displayName: profile.displayName});
+    return cb(null, {displayName: profile.displayName, profile: profile});
 }));
 
 passport.serializeUser(function(user, done) {
@@ -64,8 +65,7 @@ passport.deserializeUser(function(user, done) {
 
 //============> PRODUCT ROUTES <===============\\
 
-
-app.get('/', (req, res) => {
+app.get('/', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
@@ -73,11 +73,15 @@ app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/cart', (req, res) => {
+app.get('/cart', loggedIn, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/main',
+app.get('/getname', loggedIn, (req, res) => {
+  res.send(res.locals);
+})
+
+app.get('/main', loggedIn,
   itemController.getAllItems
 )
 
