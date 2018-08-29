@@ -29,6 +29,8 @@ const products = (state=initialState, action) => {
                 } else {
                     return product;
                 }
+                
+                
             });
             const cartObj = {};
             let itemExists = false;
@@ -42,6 +44,22 @@ const products = (state=initialState, action) => {
                 cart.push({id: action.productID, count: 1})
             }
             console.log('cart: ', cart);
+
+            fetch('/api/additem', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: action.productID,
+                    count: 1
+                })
+            })
+                .then((data) => console.log(data))
+                .then((data) => {
+                    console.log('success');
+                });
 
             return Object.assign(state, {stock, cart})
             

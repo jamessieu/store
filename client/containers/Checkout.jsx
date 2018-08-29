@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm.jsx';
 import PaymentForm from './PaymentForm.jsx';
 import Review from './Review.jsx';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   appBar: {
@@ -53,14 +54,23 @@ const styles = theme => ({
 
 const steps = ['Review your order', 'Shipping address', 'Payment details'];
 
-function getStepContent(step) {
+const mapStateToProps = store => ({
+  // provide pertinent state here
+  cart: store.products.cart,
+  stock: store.products.stock
+});
+
+function getStepContent(step, cart, stock) {
+  console.log('cart is ', cart);
+  console.log('stock is: ', stock);
   switch (step) {
     case 1:
       return <AddressForm />;
     case 2:
       return <PaymentForm />;
     case 0:
-      return <Review />;
+      return <Review cart={cart} stock={stock}/>;
+      // return <Review cart={this.props.cart} stock={this.props.stock}/>;
     default:
       throw new Error('Unknown step');
   }
@@ -92,9 +102,11 @@ class Checkout extends React.Component {
   };
 
   render() {
+    // console.log('hello!!!!', this.props.store)
     const { classes } = this.props;
     const { activeStep } = this.state;
-
+    console.log('CART: ', this.props.cart)
+    console.log('STORE!', this.props.stock);
     return (
       <React.Fragment>
         <CssBaseline />
@@ -137,7 +149,8 @@ class Checkout extends React.Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {console.log('beforestep function: ',this.props.cart)}
+                  {getStepContent(activeStep, this.props.cart, this.props.stock)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>
@@ -167,4 +180,6 @@ Checkout.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Checkout);
+// export default withStyles(styles)(Checkout);
+export default connect(mapStateToProps)(withStyles(styles)(Checkout));
+// export connect(mapStateToProps)(Checkout);

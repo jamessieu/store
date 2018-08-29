@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
 
 const products = [
   { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
@@ -14,6 +15,7 @@ const products = [
   { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
   { name: 'Shipping', desc: '', price: 'Free' },
 ];
+
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 const payments = [
   { name: 'Card type', detail: 'Visa' },
@@ -36,15 +38,16 @@ const styles = theme => ({
 
 function Review(props) {
   const { classes } = props;
+  console.log('heyyyyyyyyy: ', props.stock, props.cart)
   return (
     <React.Fragment>
       <Typography variant="title" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
+        {props.cart.map(product => (
+          <ListItem className={classes.listItem} key={product.id}>
+            <ListItemText primary={product.title} secondary={product.count} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
@@ -63,4 +66,6 @@ Review.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+// export default (withStyles(styles), connect(mapStateToProps))(Review);
 export default withStyles(styles)(Review);
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Review));
