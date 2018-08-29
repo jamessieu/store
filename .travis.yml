@@ -8,7 +8,7 @@ node_js:
   - '6.0.0'
 script:
   - npm run travis-build
-  - zip -r build /build
+  - zip -r build /build/*
   - mkdir -p dpl_cd_upload
   - mv build.zip dpl_cd_upload/build.zip
 deploy:
