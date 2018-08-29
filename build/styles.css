@@ -121,10 +121,10 @@ h2 {
 
  }
 .msg-send{
-    background: #2ecc71;
+    background: #3498db;
 }
 .msg-receive{
-    background: #3498db;
+    background: #2ecc71;
 }
 .msg-send, .msg-receive{
     width: 90%;
