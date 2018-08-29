@@ -82,14 +82,15 @@ function App(props) {
         <CssBaseline />
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <CameraIcon className={classes.icon} />
             <Typography variant="title" color="inherit" nowrap='true'>
-              E-STORE FOR THINGS THAT ARE Toight.
+              ESTORE FOR THINGS THAT ARE Toight
             </Typography>
-            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '10%', color: 'white', backgroundColor: 'gray'}}>
-              Cart
-            </Button>
-            <Button variant="raised" color="inherit" nowrap='true' style = {{position: 'absolute', right: '2%', color: 'white', backgroundColor: 'gray'}}>
+            <div onClick={() => window.location.href="http://localhost:3000/cart"} style = {{position: 'absolute', right: '10%'}}>
+              <Button variant="raised" color="secondary" nowrap='true' >
+                Cart
+              </Button>
+            </div>
+            <Button variant="raised" color="secondary" nowrap='true' style = {{position: 'absolute', right: '2%'}}>
               Logout
             </Button>
           </Toolbar>
@@ -103,14 +104,16 @@ function App(props) {
               </Typography>
               <Typography variant="title" align="center" color="textSecondary" paragraph>
                 Below are some toight things. We only sell the toightest of the toight. We highly
-                recommend buying our toight merchandice.
+                recommend buying our toight merchandise.
               </Typography>
               <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                   <Grid item>
+                  <div onClick={() => window.location.href="http://localhost:3000/cart"}>
                     <Button variant="contained" color="primary">
                       Checkout
                     </Button>
+                  </div>
                   </Grid>
                   <Grid item>
                     <Button variant="outlined" color="primary">

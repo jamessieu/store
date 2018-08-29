@@ -12,7 +12,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config()
 const session = require('express-session')
 
-
 const PORT = process.env.PORT || 3000;
 
 let sessions = {secret: 'TESTING', name: 'login', proxy: true, resave: true, saveUninitialized: false};
@@ -21,12 +20,29 @@ app.use(session(sessions));
 app.use(bodyParser.json(), passport.initialize());
 app.use(passport.session());
 
+
+//This is ugly, I know.
+function createUserAndCart(username) {
+    db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
+        .then(data => {
+            let customerId = data.id;
+            db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
+                .then(data => {})
+                .catch(error => {
+                    console.log('ERROR:', error);
+                });
+        }).catch(error => {
+            console.log('ERROR:', error);
+        });
+}
+
 function loggedIn(req, res, next) {
-    if(req.user && sessions[req.user.displayName]) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+  if(req.user && sessions[req.user.displayName]) {
+    res.locals = req.user.profile.name.givenName;
+    next();
+  } else {
+    res.redirect('/login');
+  }
 }
 
 passport.use(new GoogleStrategy({
@@ -35,10 +51,11 @@ passport.use(new GoogleStrategy({
     callbackURL: 'http://localhost:3000/googleOAuth'
 }, function(accessToken, refreshToken, profile, cb) {
     sessions[profile.displayName] = profile;
-    return cb(null, profile);
+    return cb(null, {displayName: profile.displayName, profile: profile});
 }));
 
 passport.serializeUser(function(user, done) {
+    createUserAndCart(user.displayName);
     done(null, user);
 });
 
@@ -48,37 +65,31 @@ passport.deserializeUser(function(user, done) {
 
 //============> PRODUCT ROUTES <===============\\
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
+app.get('/', loggedIn, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 })
 
-app.get('/main',
-    itemController.getAllItems
+app.get('/cart', loggedIn, (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
+})
+
+app.get('/getname', loggedIn, (req, res) => {
+  res.send(res.locals);
+})
+
+app.get('/main', loggedIn,
+  itemController.getAllItems
 )
 
 app.post('/api/users', customerController.createUser)
-
 app.get('/googleLogin', passport.authenticate('google', {scope: ['profile']}));
-
 app.get('/googleOAuth', passport.authenticate('google', {failureRedirect: '/login'}), function(req, res) {
     res.redirect('/');
 })
-
-// app.get('/mens',
-//     eventController.filterByMen,
-// )
-
-// app.get('/womens',
-//     eventController.filterByWomen,
-// )
-
-// app.get('/cart',
-//     eventController.getCart,
-// )
 
 app.use(express.static(path.join(__dirname, '../build')));
 

@@ -16,15 +16,15 @@ function getCustomer (req, res, next) {
 module.exports = {
   createUser: (req, res, next) => {
     const username = req.body.username;
-    let userId;
+    //let customerId;
     
-    db.one(`INSERT INTO "User"("username") VALUES($1) RETURNING "id"`, [username])
+    db.one(`INSERT INTO "customer"("username") VALUES($1) RETURNING "id"`, [username])
         .then(data => {
             //console.log("DATA ID", data.id);
-            userId = data.id
+            let customerId = data.id
             //res.json(data);
 
-            db.one(`INSERT INTO "Cart"("userId") VALUES($1) RETURNING "id"`, [userId])
+            db.one(`INSERT INTO "cart"("customerid") VALUES($1) RETURNING "id"`, [customerId])
                 .then(data => {
                     console.log("DATA ID", data); // print new user id;
                     res.json(data);

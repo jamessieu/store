@@ -1,33 +1,34 @@
-CREATE TABLE "User" (
+CREATE TABLE "customer" (
 	"id" serial NOT NULL,
 	"username" varchar NOT NULL,
-	CONSTRAINT User_pk PRIMARY KEY ("id")
+	"admin" BOOLEAN NOT NULL DEFAULT 'false',
+	CONSTRAINT customer_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Cart" (
+CREATE TABLE "cart" (
 	"id" serial NOT NULL,
-	"userId" integer NOT NULL,
-	CONSTRAINT Cart_pk PRIMARY KEY ("id")
+	"customerid" integer NOT NULL,
+	CONSTRAINT cart_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Item" (
+CREATE TABLE "item" (
 	"id" serial NOT NULL,
 	"quantity" integer NOT NULL,
 	"title" varchar NOT NULL,
 	"genre" varchar NOT NULL,
 	"color" varchar NOT NULL,
-	"imagePath" varchar NOT NULL,
+	"image-path" varchar NOT NULL,
 	"price" varchar NOT NULL,
-	"cartId" integer NOT NULL,
-	CONSTRAINT Item_pk PRIMARY KEY ("id")
+	"cartid" integer NOT NULL,
+	CONSTRAINT item_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
@@ -35,6 +36,6 @@ CREATE TABLE "Item" (
 
 
 
-ALTER TABLE "Cart" ADD CONSTRAINT "Cart_fk0" FOREIGN KEY ("userId") REFERENCES "User"("id");
+ALTER TABLE "cart" ADD CONSTRAINT "cart_fk0" FOREIGN KEY ("customerid") REFERENCES "customer"("id");
 
-ALTER TABLE "Item" ADD CONSTRAINT "Item_fk0" FOREIGN KEY ("cartId") REFERENCES "Cart"("id");
+ALTER TABLE "item" ADD CONSTRAINT "item_fk0" FOREIGN KEY ("cartid") REFERENCES "cart"("id");

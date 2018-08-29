@@ -1,7 +1,6 @@
 import React from 'react'
 
 
-
 const SingleProduct = (props) => {
   return (
    <div className="singleitem">

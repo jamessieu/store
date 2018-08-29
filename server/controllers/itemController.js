@@ -1,7 +1,7 @@
 const db = require("../postgresql.js");
 
 function getAllItems (req, res, next) {
-    db.query('SELECT * FROM "Product" ')
+    db.query('SELECT * FROM "Item" ')
     .then(productData => {
     res.send(productData);
 })
