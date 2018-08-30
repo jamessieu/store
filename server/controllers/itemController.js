@@ -23,8 +23,6 @@ function filterByWomen(req, res, next) {
 
 function findCustomerCart(req, res, next) {
     const customerId = req.user.id;
-    console.log('customerid: ', customerId);
-    console.log('body: ', req.body);
 
     //console.log(req)
     db.any('SELECT id FROM cart where customerid = $1', [customerId])
@@ -58,8 +56,7 @@ function incrementCartItemQuantity(req, res, next) {
     if (quantity === 0) {
         db.one('INSERT INTO cartitem(cartid, quantity, itemid) VALUES($1, $2, $3) RETURNING id', [cartId, 1, itemId])
             .then(data => {
-                console.log(data);
-                res.send(data); // print new user id;
+                next(); // print new user id;
             })
             .catch(error => {
                 console.log('ERROR CREATING NEW CARTITEM RECORD:', error);
@@ -68,18 +65,28 @@ function incrementCartItemQuantity(req, res, next) {
     }
     else {
         db.none('UPDATE cartitem SET quantity = $1 WHERE cartid = $2', [quantity + 1, cartId])
-            .then(data => {
-                console.log(data);
-                res.send(data); // print new user id;
+            .then( () => {
+                next();
             })
             .catch(error => {
-                console.log('ERROR INCREMENTING QUANTITY:', error);
+                console.log('ERROR INCREMENTING QUANTITY FROM STOCK:', error);
                 res.send(error); // print error;
             });
     }
 }
 
 function decrementStockItemQuantity(req, res, next) {
+    const itemId = req.body.id;
+    const count = req.body.count;
+
+    db.none('UPDATE "Item" SET quantity = $1 WHERE id = $2', [count - 1, itemId])
+        .then( () => {
+            req.json("SUCCESSSSS");
+        })
+        .catch(error => {
+            console.log('ERROR DECREMENTING ITEM QUANTITY FROM STOCK:', error);
+            res.send(error); // print error;
+        });
 
 }
 
@@ -115,5 +122,6 @@ module.exports = {
     addItemToCart,
     findCustomerCart,
     checkIfItemAlreadyAddedToCart,
-    incrementCartItemQuantity
+    incrementCartItemQuantity,
+    decrementStockItemQuantity
 };
