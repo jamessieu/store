@@ -47,6 +47,7 @@ const products = (state=initialState, action) => {
             }
             console.log('cart: ', cart);
 
+            console.log('PRODUCT ID: ', action.productID);
             fetch('/api/additem', {
                 method: 'POST',
                 headers: {

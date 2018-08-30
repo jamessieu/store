@@ -38,16 +38,15 @@ const styles = theme => ({
 
 function Review(props) {
   const { classes } = props;
-  console.log('heyyyyyyyyy: ', props.stock, props.cart)
   return (
     <React.Fragment>
       <Typography variant="title" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {props.cart.map(product => (
-          <ListItem className={classes.listItem} key={product.id}>
-            <ListItemText primary={product.title} secondary={product.count} />
+        {products.map(product => (
+          <ListItem className={classes.listItem} key={product.name}>
+            <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
