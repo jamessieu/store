@@ -22,7 +22,9 @@ function filterByWomen(req, res, next) {
 };
 
 function findCustomerCart(req, res, next) {
-    const customerId = req.body.user.id;
+    const customerId = req.user.id;
+    console.log('customerid: ', customerId);
+    console.log('body: ', req.body);
 
     //console.log(req)
     db.any('SELECT id FROM cart where customerid = $1', [customerId])
@@ -65,7 +67,7 @@ function incrementCartItemQuantity(req, res, next) {
             });
     }
     else {
-        db.one('UPDATE cartitem SET quantity = $1 WHERE cartid = $2', [quantity + 1, cartId])
+        db.none('UPDATE cartitem SET quantity = $1 WHERE cartid = $2', [quantity + 1, cartId])
             .then(data => {
                 console.log(data);
                 res.send(data); // print new user id;

@@ -9,6 +9,7 @@ const products = (state=initialState, action) => {
 
     let cart;
     let stock;
+    let remainder;
     
     switch(action.type) {
         case types.LOAD_PRODUCTS:
@@ -25,6 +26,7 @@ const products = (state=initialState, action) => {
                         imagePath: product.imagePath,
                         price: product.price
                     }     
+                    remainder = productObj.quantity;
                     return productObj;
                 } else {
                     return product;
@@ -53,7 +55,7 @@ const products = (state=initialState, action) => {
                 },
                 body: JSON.stringify({
                     id: action.productID,
-                    count: 1
+                    count: remainder
                 })
             })
                 .then((data) => console.log(data))

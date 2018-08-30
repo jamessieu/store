@@ -60,7 +60,7 @@ const mapStateToProps = store => ({
   stock: store.products.stock
 });
 
-function getStepContent(step, cart, stock) {
+function getStepContent(step) {
   console.log('cart is ', cart);
   console.log('stock is: ', stock);
   switch (step) {
@@ -69,7 +69,15 @@ function getStepContent(step, cart, stock) {
     case 2:
       return <PaymentForm />;
     case 0:
-      return <Review cart={cart} stock={stock}/>;
+      fetch('/api/getitem')
+      .then(resp => resp.json())
+      .then(data => {
+
+        
+
+        return <Review cart={cart} stock={stock}/>;
+      })
+      
       // return <Review cart={this.props.cart} stock={this.props.stock}/>;
     default:
       throw new Error('Unknown step');
@@ -150,7 +158,7 @@ class Checkout extends React.Component {
               ) : (
                 <React.Fragment>
                   {console.log('beforestep function: ',this.props.cart)}
-                  {getStepContent(activeStep, this.props.cart, this.props.stock)}
+                  {getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>
